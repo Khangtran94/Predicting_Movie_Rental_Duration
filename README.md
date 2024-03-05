@@ -18,7 +18,7 @@ A regression model which yeilds a MSE is less than or equal to 3 on a test set.
 * Model Random Forest
 * Model Evaluation
 
-### Technologies
+### Technologies:
 * Python / Jupyter Notebook
 * Pandas, sklearn
 
@@ -34,7 +34,7 @@ The dataset has **15861 rows** and **15 columns**.
 * Rental Length = Return Date - Rental Date
 * Rental Length: How many days a DVD has been rented by a customer.
 
-### 2. Adding dummy variables using the "special features" column.
+### 2. Adding dummy variables using the "special features" column:
 * By create two more columns:
   - Deleted_Scenes: Value 1 equal to the movie if it has the deleted scenes.
   - Behind_the_Scenes: Value 1 equal to the movie if it has the behind the scenes.
