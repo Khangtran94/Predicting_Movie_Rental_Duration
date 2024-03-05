@@ -34,9 +34,11 @@ df_rental["behind_the_scenes"] =  np.where(df_rental["special_features"].str.con
 # Choose columns to drop
 cols_to_drop = ["special_features", "rental_length", "rental_length_days", "rental_date", "return_date"]
 
+
 # Split into feature and target sets
 X = df_rental.drop(cols_to_drop, axis=1)
 y = df_rental["rental_length_days"]
+
 
 # Further split into training and test data
 X_train,X_test,y_train,y_test = train_test_split(X, 
@@ -50,15 +52,18 @@ lasso = Lasso(alpha=0.3, random_state=9)
 # Train the model and access the coefficients
 lasso.fit(X_train, y_train)
 lasso_coef = lasso.coef_
+lasso_coef
 
 # Perform feature selectino by choosing columns with positive coefficients
 X_lasso_train, X_lasso_test = X_train.iloc[:, lasso_coef > 0], X_test.iloc[:, lasso_coef > 0]
+
 
 # Run OLS models on lasso chosen regression
 ols = LinearRegression()
 ols = ols.fit(X_lasso_train, y_train)
 y_test_pred = ols.predict(X_lasso_test)
 mse_lin_reg_lasso = mean_squared_error(y_test, y_test_pred)
+mse_lin_reg_lasso
 
 # Random forest hyperparameter space
 param_dist = {'n_estimators': np.arange(1,101,1),
@@ -78,6 +83,7 @@ rand_search.fit(X_train, y_train)
 
 # Create a variable for the best hyper param
 hyper_params = rand_search.best_params_
+hyper_params
 
 # Run the random forest on the chosen hyper parameters
 rf = RandomForestRegressor(n_estimators=hyper_params["n_estimators"], 
@@ -86,7 +92,18 @@ rf = RandomForestRegressor(n_estimators=hyper_params["n_estimators"],
 rf.fit(X_train,y_train)
 rf_pred = rf.predict(X_test)
 mse_random_forest= mean_squared_error(y_test, rf_pred)
-
+mse_random_forest
 # Random forest gives lowest MSE so:
 best_model = rf
 best_mse = mse_random_forest
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# acc = pd.DataFrame({'Linear_Lasso':[4.812297],'Random_Forest':[2.225668]})
+acc = pd.DataFrame({'score':[mse_lin_reg_lasso,mse_random_forest],'Model':['Linear_Lasso','Random_Forest']})
+acc
+
+sns.barplot(data = acc, x = 'Model', y= 'score',hue = 'Model')
+plt.axhline(y=3, color='red', linestyle='--', label='Threshold')
+plt.show()
