@@ -75,6 +75,7 @@ Therefore, the dataset will become:
 
 ![Untitled](https://github.com/Khangtran94/Predicting_Movie_Rental_Duration/assets/146164801/32d2c6da-fa1e-4e8e-b60b-a89cdf4740c1)
 
-* Conclusion: Random forest gives lowest MSE and satisfied the request from a DVD rental company.
+* Conclusion: Random forest gives lowest MSE.
+* While the MSE of 2 might seem high, it's acceptable considering the large dataset (over 15,000 rows) and meets the DVD rental company's requirement of an MSE equal to or lower than 3.
 
 
